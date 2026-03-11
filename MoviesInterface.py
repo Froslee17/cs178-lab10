@@ -4,6 +4,7 @@
 # proposed score: 5 (out of 5) -- if I don't change this, I agree to get 0 points.
 
 import boto3
+from decimal import Decimal
 
 # boto3 uses the credentials configured via `aws configure` on EC2
 dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
@@ -30,7 +31,7 @@ def create_movie():
         movie["Year"] = int(year_input)
 
     if ratings_input:
-        movie["Ratings"] = [float(ratings_input)]
+        movie["Ratings"] = [Decimal(ratings_input)]
     else:
         movie["Ratings"] = []
 
