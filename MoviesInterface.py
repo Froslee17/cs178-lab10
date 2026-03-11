@@ -1,13 +1,20 @@
-# name: YOUR NAME HERE
-# date:
+# name: Alex Froslee
+# date: 3/5/26
 # description: Implementation of CRUD operations with DynamoDB — CS178 Lab 10
-# proposed score: 0 (out of 5) -- if I don't change this, I agree to get 0 points.
+# proposed score: 5 (out of 5) -- if I don't change this, I agree to get 0 points.
 
 import boto3
 
 # boto3 uses the credentials configured via `aws configure` on EC2
 dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
 table = dynamodb.Table('Movies')
+REGION = "us-east-1"
+TABLE_NAME = "Movies"
+
+def get_table():
+    """Return a reference to the DynamoDB Movies table."""
+    dynamodb = boto3.resource("dynamodb", region_name=REGION)
+    return dynamodb.Table(TABLE_NAME)
 
 def create_movie():
     """
@@ -26,8 +33,7 @@ def print_movie(movie):
     print(f"  Year   : {year}")
     print(f"  Ratings: {ratings}")
     print(f"  Genre: {genre}")
-
-
+    
 def print_all_movies():
     """Scan the entire Movies table and print each item."""
     table = get_table()
