@@ -17,11 +17,26 @@ def get_table():
     return dynamodb.Table(TABLE_NAME)
 
 def create_movie():
-    """
-    Prompt user for a Movie Title.
-    Add the movie to the database with the title and an empty Ratings list.
-    """
-    print("creating a movie")
+    title = input("Enter movie title: ")
+
+    year_input = input("Enter movie year (optional): ")
+    ratings_input = input("Enter starting rating (optional): ")
+
+    movie = {
+        "Title": title
+    }
+
+    if year_input:
+        movie["Year"] = int(year_input)
+
+    if ratings_input:
+        movie["Ratings"] = [float(ratings_input)]
+    else:
+        movie["Ratings"] = []
+
+    table.put_item(Item=movie)
+
+    print("Movie added successfully!")
 
 def print_movie(movie):
     title = movie.get("Title", "Unknown Title")
@@ -33,7 +48,7 @@ def print_movie(movie):
     print(f"  Year   : {year}")
     print(f"  Ratings: {ratings}")
     print(f"  Genre: {genre}")
-    
+
 def print_all_movies():
     """Scan the entire Movies table and print each item."""
     table = get_table()
